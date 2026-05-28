@@ -21,6 +21,7 @@ tmp/
 master.key
 config/master.key
 config/credentials/*.key
+settings.yaml
 
 # RSpec
 .rspec_status
