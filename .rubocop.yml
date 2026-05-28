@@ -1,0 +1,8 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  NewCops: disable
+  TargetRubyVersion: 4.0
+  Exclude:
+    - 'vendor/**/*'
+    - 'bin/**/*'
