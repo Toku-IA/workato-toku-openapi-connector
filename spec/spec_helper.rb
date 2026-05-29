@@ -29,10 +29,15 @@ VCR.configure do |config|
   config.register_request_matcher :multipart_body do |request1, request2|
     Workato::Testing::VCRMultipartBodyMatcher.call(request1, request2)
   end
+  # Google OAuth2 JWT tokens include timestamps (iat/exp) that change on every run,
+  # so body matching would always fail for GCP auth requests.
+  config.register_request_matcher :body_except_gcp_auth do |request1, request2|
+    request1.uri.include?('oauth2.googleapis.com') || request1.body == request2.body
+  end
   config.default_cassette_options = {
     record: ENV.fetch('VCR_RECORD_MODE', :none).to_sym,
     serialize_with: :encrypted,
-    match_requests_on: %i[uri headers_without_user_agent body]
+    match_requests_on: %i[uri headers_without_user_agent body_except_gcp_auth]
   }
   config.configure_rspec_metadata!
 end

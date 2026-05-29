@@ -1,0 +1,28 @@
+# Ruby
+*.gem
+*.rbc
+.bundle
+.config
+.yardoc
+Gemfile.lock.local
+InstalledFiles
+_yardoc/
+coverage/
+doc/
+lib/bundler/man/
+pkg/
+rdoc/
+spec/reports/
+test/tmp/
+test/version_tmp/
+tmp/
+
+# Secrets - never commit these
+master.key
+config/master.key
+config/credentials/*.key
+settings.yaml
+
+# RSpec
+.rspec_status
+

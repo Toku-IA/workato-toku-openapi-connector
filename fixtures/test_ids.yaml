@@ -1,0 +1,11 @@
+# Test IDs for get_record execute tests
+# Fill in each value and let me know when done.
+
+customer:
+  encrypted_customer_id: "cus__hZU9CdxmK5OLALA626zNgNUk0Bdsr5b"
+
+subscription:
+  subscription_id: "sub_FIv5RoeLXN4I8Z5K2YaDVRfBR4N7hhY0"
+
+webhook_endpoint:
+  webhook_endpoint_id: "whe_m6JFquqs1zHip40NsntqtQCzION55V6B"

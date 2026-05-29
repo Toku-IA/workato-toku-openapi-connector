@@ -1,0 +1,56 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+          bundler-cache: true
+
+      - name: Run RuboCop
+        run: bundle exec rubocop
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+          bundler-cache: true
+
+      - name: Write master.key
+        run: echo "${{ secrets.MASTER_KEY }}" > master.key
+
+      - name: Run RSpec
+        run: bundle exec rspec
+
+  deploy:
+    needs: [lint, test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+          bundler-cache: true
+
+      - name: Deploy connector to Workato
+        env:
+          WORKATO_API_TOKEN: ${{ secrets.WORKATO_API_TOKEN }}
+          NOTES: ${{ github.event.head_commit.message }}
+        run: |
+          bundle exec workato push \
+            --connector connector.rb \
+            --notes "$NOTES"
